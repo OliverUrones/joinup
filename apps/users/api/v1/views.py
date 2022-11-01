@@ -8,12 +8,17 @@ from apps.users.models import Profile
 
 
 class ProfileViewSet(ModelViewSet):
+    permission_classes = (AllowAny,)
     permission_classes_by_action = {
         'create': (AllowAny,),
-        'retrieve': (IsAuthenticated,)
+        'retrieve': (IsAuthenticated,),
+        'list': (IsAuthenticated,),
+        'update': (IsAuthenticated,),
+        'partial_update': (IsAuthenticated,),
     }
     serializer_class = ProfileSignupSerializer
     serializer_action_classes = {
+        'create': ProfileSignupSerializer,
         'retrieve': ProfileDetailSerializer
     }
 
