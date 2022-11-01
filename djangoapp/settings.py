@@ -30,6 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ENVIRONMENT = env('ENVIRONMENT').lower()
 
 # Application definition
 
