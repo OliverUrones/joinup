@@ -4,7 +4,7 @@ from rest_framework.authtoken.models import Token
 
 from phonenumber_field.serializerfields import PhoneNumberField
 
-from djangoapp.settings import env
+from djangoapp.settings import env, ENVIRONMENT
 from apps.users.models import Profile
 from apps.users.api.v1.utils import EmailSender, SmsSender
 
@@ -40,7 +40,7 @@ class ProfileSignupSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
 
-        if env('ENVIRONMENT').lower() == 'prod':
+        if ENVIRONMENT.lower() == 'prod':
             # Send Email
             email_sender = EmailSender(to_email=user.email, user_name='{0} {1}'.format(user.first_name, user.last_name), validation_url='https://domain.com/api/v1/validation_email/')
             email_sender.send_email()
@@ -50,3 +50,9 @@ class ProfileSignupSerializer(serializers.ModelSerializer):
             sms_sender.send_sms()
 
         return user
+
+
+class ProfileDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('id', 'email', 'first_name', 'last_name', 'phone', 'hobbies', 'validated_email', 'validated_phone')
