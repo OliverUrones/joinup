@@ -18,7 +18,7 @@ Endpoint to register users.
 ### POST api/v1/api-auth
 Endpoint to get user token by email and password
 
-### POST api/v1/profile/$pk
+### GET api/v1/profile/$pk
 Endpoint to get profile use data
 
 # Asynchronous configurations
