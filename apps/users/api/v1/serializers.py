@@ -8,6 +8,8 @@ from djangoapp.settings import env, ENVIRONMENT
 from apps.users.models import Profile
 from apps.users.api.v1.utils import EmailSender, SmsSender
 
+from apps.users.api.v1.tasks import async_tasks
+
 
 class ProfileSignupSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(validators=[UniqueValidator(queryset=Profile.objects.all())])
@@ -40,14 +42,19 @@ class ProfileSignupSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
 
-        if ENVIRONMENT.lower() == 'prod':
+        if ENVIRONMENT.lower() == 'local':
+            # SENDERS SYNCHRONOUS
             # Send Email
-            email_sender = EmailSender(to_email=user.email, user_name='{0} {1}'.format(user.first_name, user.last_name), validation_url='https://domain.com/api/v1/validation_email/')
-            email_sender.send_email()
+            # email_sender = EmailSender(to_email=user.email, user_name='{0} {1}'.format(user.first_name, user.last_name), validation_url='https://domain.com/api/v1/validation_email/')
+            # email_sender.send_email()
 
             # Send sms
-            sms_sender = SmsSender(to_phone=user.phone, text='Valide su teléfono')
-            sms_sender.send_sms()
+            # sms_sender = SmsSender(to_phone=user.phone, text='Valide su teléfono')
+            # sms_sender.send_sms()
+
+            # SENDERS ASYNCHRONOUS
+            result = async_tasks(user)
+            print(result.get())
 
         return user
 
