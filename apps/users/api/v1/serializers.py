@@ -42,7 +42,7 @@ class ProfileSignupSerializer(serializers.ModelSerializer):
         user.save()
         Token.objects.create(user=user)
 
-        if ENVIRONMENT.lower() == 'local':
+        if ENVIRONMENT.lower() == 'prod':
             # SENDERS SYNCHRONOUS
             # Send Email
             # email_sender = EmailSender(to_email=user.email, user_name='{0} {1}'.format(user.first_name, user.last_name), validation_url='https://domain.com/api/v1/validation_email/')
