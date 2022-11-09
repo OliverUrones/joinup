@@ -11,14 +11,25 @@ API to create users and send email and sms synchronous and asynchronous to valid
 * Packages on requirements.txt file installed on virtual environment.
 * Need .env file to save environment variable
 
+# .env FILE
+#### This is the file that contains the necessary environment varibles
+ENVIRONMENT='prod'  
+SENDGRID_FROM_ADDRESS='no-replay@joinup.es'  
+SENGRID_API_KEY='YOUR_SENDGRID_API_KEY'  
+SENDGRID_VALIDATION_EMAIL_TEMPLATE_ID='YOUR_TEMPLATE_ID'  
+SMS_SENDER_NUMBER='000000000'  
+TWILIO_ACCOUNT_SID='ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'  
+TWILIO_AUTH_TOKEN='YOUR_AUTH_TOKEN'  
+
+
 # ENDPOINTS
-### POST api/v1/signup
+### POST api/v1/signup/
 Endpoint to register users.
 
 ### POST api/v1/api-auth
 Endpoint to get user token by email and password
 
-### GET api/v1/profile/$pk
+### GET api/v1/profile/
 Endpoint to get profile use data
 
 # Asynchronous configurations
