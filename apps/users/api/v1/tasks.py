@@ -3,6 +3,7 @@ from apps.users.api.v1.utils import EmailSender, SmsSender
 from djangoapp.celeryapp import app
 from celery import group
 from requests.exceptions import RequestException
+from time import sleep
 
 
 def async_tasks(user):
@@ -31,6 +32,7 @@ def send_email(to_email, full_name, validation_link):
     # email_sender = EmailSender(to_email=to_email, user_name=full_name, validation_url=validation_link)
     # resp = email_sender.send_email()
     resp = True
+    sleep(10)
 
     if resp:
         return 0
@@ -46,6 +48,7 @@ def send_sms(to_phone, text):
     # sms_sender = SmsSender(to_phone=to_phone, text=text)
     # message = sms_sender.send_sms()
     message = True
+    sleep(10)
 
     if message:
         return 0
