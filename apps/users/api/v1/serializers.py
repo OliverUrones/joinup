@@ -15,21 +15,13 @@ class ProfileSignupSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(validators=[UniqueValidator(queryset=Profile.objects.all())])
     phone = PhoneNumberField(required=True)
     password = serializers.CharField(write_only=True, allow_blank=False)
-    password2 = serializers.CharField(write_only=True, allow_blank=False)
 
     class Meta:
         model = Profile
-        fields = ('id', 'email', 'first_name', 'last_name', 'phone', 'hobbies', 'password', 'password2',)
-        write_only = ('password', 'password2')
-
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password didn't match."})
-
-        return attrs
+        fields = ('id', 'email', 'first_name', 'last_name', 'phone', 'hobbies', 'password',)
+        write_only = ('password')
 
     def create(self, validated_data):
-        print(type(validated_data['phone']))
         user = Profile.objects.create(
             username=validated_data['email'],
             email=validated_data['email'],
@@ -53,8 +45,7 @@ class ProfileSignupSerializer(serializers.ModelSerializer):
             # sms_sender.send_sms()
 
             # SENDERS ASYNCHRONOUS
-            result = async_tasks(user)
-            print(result.get())
+            async_tasks(user)
 
         return user
 
