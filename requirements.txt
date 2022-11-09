@@ -1,6 +1,7 @@
 Django==3.2.16
 djangorestframework==3.14.0
 django-phonenumber-field==6.0.0
+django-phonenumbers==8.12.57
 sendgrid==6.9.7
 django-environ==0.9.0
 twilio==7.15.1
