@@ -19,9 +19,3 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoapp.settings')
 
 app = Celery('djangoapp.celeryapp', backend=celery_backend, broker=celery_broker)
 
-
-# Uncomment to execute task synchronous into local environment
-# if ENVIRONMENT == 'local':
-#     app.conf.update(
-#         CELERY_ALWAYS_EAGER=True,
-#     )
